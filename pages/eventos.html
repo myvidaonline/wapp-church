@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563eb">
+  <title>Eventos - Igreja Vida Nova</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-left"><span class="logo">🏠</span><h1>Igreja Vida Nova</h1></div>
+    <a href="../admin/admin.html" class="admin-link">Admin</a>
+  </header>
+
+  <nav class="bottom-nav">
+    <a href="home.html" class="nav-item"><span class="nav-icon">🏠</span><span>Início</span></a>
+    <a href="agenda.html" class="nav-item"><span class="nav-icon">📅</span><span>Agenda</span></a>
+    <a href="eventos.html" class="nav-item active"><span class="nav-icon">🎉</span><span>Eventos</span></a>
+    <a href="biblia.html" class="nav-item"><span class="nav-icon">📖</span><span>Bíblia</span></a>
+    <a href="radio.html" class="nav-item"><span class="nav-icon">📻</span><span>Rádio</span></a>
+    <a href="doacoes.html" class="nav-item"><span class="nav-icon">💝</span><span>Doações</span></a>
+    <a href="contato.html" class="nav-item"><span class="nav-icon">📞</span><span>Contato</span></a>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <h2>🎉 Eventos</h2>
+      <p>Confira nossa programação de eventos especiais</p>
+    </section>
+
+    <section class="card">
+      <div class="card-header">
+        <h3 class="card-title">Próximos Eventos</h3>
+      </div>
+      <div class="events-grid" id="eventos-list"></div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { Storage } from '../utils/storage.js';
+    import { DEFAULT_DATA } from '../config/config.js';
+
+    const content = Storage.load('content', {});
+    let events = content.events || DEFAULT_DATA.events;
+    
+    const now = new Date();
+    const upcomingEvents = events
+      .filter(e => new Date(e.data) >= now)
+      .sort((a, b) => new Date(a.data) - new Date(b.data));
+
+    const container = document.getElementById('eventos-list');
+    if (upcomingEvents.length > 0) {
+      container.innerHTML = upcomingEvents.map(event => `
+        <div class="event-card">
+          <div class="event-content">
+            <h4 class="event-title">${event.titulo}</h4>
+            <p class="event-description">${event.descricao || ''}</p>
+            <div class="event-meta">
+              <span>📅 ${new Date(event.data).toLocaleDateString('pt-BR', {weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute:'2-digit'})}</span>
+              <span>📍 ${event.local}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      container.innerHTML = '<p class="text-muted">Nenhum evento próximo cadastrado.</p>';
+    }
+  </script>
+</body>
+</html>

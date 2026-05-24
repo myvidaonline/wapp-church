@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="Igreja Vida Nova - Uma igreja acolhedora para toda a família">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Igreja Vida Nova">
+  <title>Igreja Vida Nova</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <span class="logo">🏠</span>
+      <h1>Igreja Vida Nova</h1>
+    </div>
+    <a href="admin/admin.html" class="admin-link">Admin</a>
+  </header>
+
+  <!-- Navegação Mobile -->
+  <nav class="bottom-nav">
+    <a href="pages/home.html" class="nav-item active">
+      <span class="nav-icon">🏠</span>
+      <span>Início</span>
+    </a>
+    <a href="pages/agenda.html" class="nav-item">
+      <span class="nav-icon">📅</span>
+      <span>Agenda</span>
+    </a>
+    <a href="pages/eventos.html" class="nav-item">
+      <span class="nav-icon">🎉</span>
+      <span>Eventos</span>
+    </a>
+    <a href="pages/biblia.html" class="nav-item">
+      <span class="nav-icon">📖</span>
+      <span>Bíblia</span>
+    </a>
+    <a href="pages/radio.html" class="nav-item">
+      <span class="nav-icon">📻</span>
+      <span>Rádio</span>
+    </a>
+    <a href="pages/doacoes.html" class="nav-item">
+      <span class="nav-icon">💝</span>
+      <span>Doações</span>
+    </a>
+    <a href="pages/contato.html" class="nav-item">
+      <span class="nav-icon">📞</span>
+      <span>Contato</span>
+    </a>
+  </nav>
+
+  <!-- Conteúdo Principal -->
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <h2>Bem-vindo à Igreja Vida Nova</h2>
+      <p>Uma comunidade de fé, esperança e amor</p>
+    </section>
+
+    <!-- Versículo do Dia -->
+    <section class="verse-card" data-cms-target="versiculo-dia">
+      <p class="verse-text">"Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna."</p>
+      <p class="verse-ref">João 3:16</p>
+    </section>
+
+    <!-- Avisos -->
+    <section class="card">
+      <div class="card-header">
+        <h3 class="card-title">📢 Avisos Recentes</h3>
+      </div>
+      <div class="notices-list" id="avisos-container" data-cms-target="avisos">
+        <div class="notice-item">
+          <p class="notice-title">Retiro Espiritual</p>
+          <p class="text-muted">Inscrições abertas para o retiro de casais</p>
+          <span class="notice-date">20/05/2025</span>
+        </div>
+        <div class="notice-item">
+          <p class="notice-title">Campanha de Doação</p>
+          <p class="text-muted">Estamos arrecadando alimentos para famílias carentes</p>
+          <span class="notice-date">18/05/2025</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Próximos Eventos -->
+    <section class="card">
+      <div class="card-header">
+        <h3 class="card-title">📅 Próximos Eventos</h3>
+        <a href="pages/eventos.html" class="btn btn-secondary btn-small">Ver todos</a>
+      </div>
+      <div class="events-grid" id="eventos-destaque" data-cms-target="eventos-destaque">
+        <!-- Eventos carregados via JS -->
+      </div>
+    </section>
+
+    <!-- Horários de Culto -->
+    <section class="card">
+      <div class="card-header">
+        <h3 class="card-title">⏰ Horários de Culto</h3>
+      </div>
+      <div class="notices-list">
+        <div class="notice-item">
+          <p class="notice-title">Domingo</p>
+          <p class="text-muted">Escola Bíblica: 09:00 | Culto de Celebração: 10:30</p>
+        </div>
+        <div class="notice-item">
+          <p class="notice-title">Quarta-feira</p>
+          <p class="text-muted">Culto de Oração e Palavra: 19:30</p>
+        </div>
+        <div class="notice-item">
+          <p class="notice-title">Sábado</p>
+          <p class="text-muted">Grupo de Jovens: 19:00</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Player Fixo (aparece em todas as páginas) -->
+  <div class="player-fixed" id="radio-player">
+    <div class="player-controls">
+      <button class="play-btn" id="play-pause-btn">▶</button>
+      <div class="player-info">
+        <strong>Rádio Vida Nova</strong>
+        <span class="text-muted">Ao vivo</span>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+  
+  <script>
+    // Registrar Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(reg => console.log('SW registrado:', reg.scope))
+          .catch(err => console.log('SW erro:', err));
+      });
+    }
+  </script>
+</body>
+</html>
