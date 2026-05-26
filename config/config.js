@@ -47,7 +47,7 @@ export const CONFIG = {
       id: 1, 
       nome: "Administrador", 
       user: "admin", 
-      pass: "5e884898da28047d91651409992588ce", // senha: password (hash MD5 simples para demo)
+      pass: "5f4dcc3b5aa765d61d8327deb882cf99", // senha: password (hash MD5)
       role: "admin",
       ativo: true 
     },
@@ -55,7 +55,7 @@ export const CONFIG = {
       id: 2, 
       nome: "Editor", 
       user: "editor", 
-      pass: "1c63129ae9db9cfa73665463094f8140", // senha: editor123
+      pass: "50116a1a3b67657572a00ea8c6680cb9", // senha: editor123 (hash MD5)
       role: "editor",
       ativo: true 
     }
