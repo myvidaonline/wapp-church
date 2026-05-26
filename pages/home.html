@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563eb">
+  <title>Início - Igreja Vida Nova</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <span class="logo">🏠</span>
+      <h1>Igreja Vida Nova</h1>
+    </div>
+    <a href="../admin/admin.html" class="admin-link">Admin</a>
+  </header>
+
+  <!-- Navegação Mobile -->
+  <nav class="bottom-nav">
+    <a href="home.html" class="nav-item active">
+      <span class="nav-icon">🏠</span>
+      <span>Início</span>
+    </a>
+    <a href="agenda.html" class="nav-item">
+      <span class="nav-icon">📅</span>
+      <span>Agenda</span>
+    </a>
+    <a href="eventos.html" class="nav-item">
+      <span class="nav-icon">🎉</span>
+      <span>Eventos</span>
+    </a>
+    <a href="biblia.html" class="nav-item">
+      <span class="nav-icon">📖</span>
+      <span>Bíblia</span>
+    </a>
+    <a href="radio.html" class="nav-item">
+      <span class="nav-icon">📻</span>
+      <span>Rádio</span>
+    </a>
+    <a href="doacoes.html" class="nav-item">
+      <span class="nav-icon">💝</span>
+      <span>Doações</span>
+    </a>
+    <a href="contato.html" class="nav-item">
+      <span class="nav-icon">📞</span>
+      <span>Contato</span>
+    </a>
+  </nav>
+
+  <!-- Conteúdo Principal -->
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <h2>Bem-vindo à Igreja Vida Nova</h2>
+      <p>Uma comunidade de fé, esperança e amor</p>
+    </section>
+
+    <!-- Versículo do Dia -->
+    <section class="verse-card" data-cms-target="versiculo-dia">
+      <p class="verse-text">"Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna."</p>
+      <p class="verse-ref">João 3:16</p>
+    </section>
+
+    <!-- Avisos -->
+    <section class="card">
+      <div class="card-header">
+        <h3 class="card-title">📢 Avisos Recentes</h3>
+      </div>
+      <div class="notices-list" id="avisos-container" data-cms-target="avisos">
+        <!-- Carregado via JS -->
+      </div>
+    </section>
+
+    <!-- Próximos Eventos -->
+    <section class="card">
+      <div class="card-header">
+        <h3 class="card-title">📅 Próximos Eventos</h3>
+        <a href="eventos.html" class="btn btn-secondary btn-small">Ver todos</a>
+      </div>
+      <div class="events-grid" id="eventos-destaque" data-cms-target="eventos-destaque">
+        <!-- Carregado via JS -->
+      </div>
+    </section>
+
+    <!-- Horários de Culto -->
+    <section class="card">
+      <div class="card-header">
+        <h3 class="card-title">⏰ Horários de Culto</h3>
+      </div>
+      <div class="notices-list">
+        <div class="notice-item">
+          <p class="notice-title">Domingo</p>
+          <p class="text-muted">Escola Bíblica: 09:00 | Culto de Celebração: 10:30</p>
+        </div>
+        <div class="notice-item">
+          <p class="notice-title">Quarta-feira</p>
+          <p class="text-muted">Culto de Oração e Palavra: 19:30</p>
+        </div>
+        <div class="notice-item">
+          <p class="notice-title">Sábado</p>
+          <p class="text-muted">Grupo de Jovens: 19:00</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Player Fixo -->
+  <div class="player-fixed" id="radio-player">
+    <div class="player-controls">
+      <button class="play-btn" id="play-pause-btn">▶</button>
+      <div class="player-info">
+        <strong>Rádio Vida Nova</strong>
+        <span class="text-muted">Ao vivo</span>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { Storage } from '../utils/storage.js';
+    import { DEFAULT_DATA } from '../config/config.js';
+
+    // Carregar avisos
+    const content = Storage.load('content', {});
+    const avisos = content.avisos || DEFAULT_DATA.avisos;
+    
+    const avisosContainer = document.getElementById('avisos-container');
+    if (avisosContainer && avisos.length > 0) {
+      avisosContainer.innerHTML = avisos.map(aviso => `
+        <div class="notice-item">
+          <p class="notice-title">${aviso.titulo}</p>
+          <p class="text-muted">${aviso.texto}</p>
+          <span class="notice-date">${new Date(aviso.dataPublicacao).toLocaleDateString('pt-BR')}</span>
+        </div>
+      `).join('');
+    }
+
+    // Carregar eventos
+    const events = content.events || DEFAULT_DATA.events;
+    const now = new Date();
+    const upcomingEvents = events
+      .filter(e => new Date(e.data) >= now)
+      .sort((a, b) => new Date(a.data) - new Date(b.data))
+      .slice(0, 3);
+    
+    const eventosContainer = document.getElementById('eventos-destaque');
+    if (eventosContainer) {
+      if (upcomingEvents.length > 0) {
+        eventosContainer.innerHTML = upcomingEvents.map(event => `
+          <div class="event-card">
+            <div class="event-content">
+              <h4 class="event-title">${event.titulo}</h4>
+              <p class="event-description">${event.descricao || ''}</p>
+              <div class="event-meta">
+                <span>📅 ${new Date(event.data).toLocaleDateString('pt-BR')}</span>
+                <span>📍 ${event.local}</span>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        eventosContainer.innerHTML = '<p class="text-muted">Nenhum evento próximo</p>';
+      }
+    }
+
+    // Player de rádio
+    const playBtn = document.getElementById('play-pause-btn');
+    if (playBtn) {
+      let isPlaying = false;
+      playBtn.addEventListener('click', () => {
+        isPlaying = !isPlaying;
+        playBtn.textContent = isPlaying ? '⏸' : '▶';
+      });
+    }
+  </script>
+</body>
+</html>

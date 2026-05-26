@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563eb">
+  <title>Offline - Igreja Vida Nova</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main style="text-align: center; padding: 40px 20px;">
+    <div class="hero">
+      <h2>📡 Você está offline</h2>
+      <p>Não foi possível conectar à internet</p>
+    </div>
+    
+    <section class="card">
+      <h3>O que você pode fazer:</h3>
+      <ul style="text-align: left; margin-top: 16px; line-height: 2;">
+        <li>✅ Acessar páginas já visitadas (em cache)</li>
+        <li>✅ Ver conteúdo salvo localmente</li>
+        <li>⏳ Aguardar a conexão voltar para sincronizar</li>
+      </ul>
+    </section>
+    
+    <section class="card">
+      <button class="btn btn-primary" onclick="window.location.reload()">
+        🔄 Tentar novamente
+      </button>
+    </section>
+    
+    <p class="text-muted mt-2">
+      O aplicativo sincronizará automaticamente quando a conexão for restabelecida.
+    </p>
+  </main>
+  
+  <script>
+    // Detectar quando voltar online
+    window.addEventListener('online', () => {
+      window.location.reload();
+    });
+  </script>
+</body>
+</html>
