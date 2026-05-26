@@ -60,18 +60,29 @@ export const Auth = {
       
       // Hash da senha fornecida
       const passwordHash = md5(password);
-      console.log('Login attempt:', { username, passwordHash });
-      console.log('Usuarios disponíveis:', usuarios.map(u => ({ user: u.user, pass: u.pass, ativo: u.ativo })));
+      console.log('🔐 Tentativa de login:', { username, password, passwordHash });
+      console.log('👥 Usuários disponíveis:', usuarios.map(u => ({ user: u.user, pass: u.pass, ativo: u.ativo })));
       
+      // Debug: mostrar hashes esperados
+      console.log('🔍 Hash esperado para "password":', md5('password'));
+      console.log('🔍 Hash esperado para "editor123":', md5('editor123'));
+
       // Buscar usuário
       const user = usuarios.find(u => {
-        const match = u.user === username && u.pass === passwordHash && u.ativo !== false;
-        console.log(`Checking user ${u.user}:`, { 
-          userMatch: u.user === username, 
-          passMatch: u.pass === passwordHash, 
-          ativo: u.ativo !== false,
-          match 
+        const userMatch = u.user === username;
+        const passMatch = u.pass === passwordHash;
+        const ativoMatch = u.ativo !== false;
+        const match = userMatch && passMatch && ativoMatch;
+        
+        console.log(`🔎 Verificando usuário ${u.user}:`, { 
+          userMatch, 
+          passMatch, 
+          ativoMatch,
+          match,
+          hashFornecido: passwordHash,
+          hashArmazenado: u.pass
         });
+        
         return match;
       });
       
